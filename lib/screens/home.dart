@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:qr_reader/providers/db_provider.dart';
 import 'package:qr_reader/providers/ui_providers.dart';
 import 'package:qr_reader/screens/direcciones.dart';
 import 'package:qr_reader/screens/mapa.dart';
@@ -41,6 +42,8 @@ class _HomeBody extends StatelessWidget {
 
     // Cambiar para mostrar la pantalla correspondiente
     final currenIndex = uiProvider.selectedMenuOption;
+    // TODO: Leer la BD
+    DBProvider.db.database;
 
     switch (currenIndex) {
       case 0:
