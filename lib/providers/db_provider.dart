@@ -63,7 +63,65 @@ class DBProvider {
 
   Future<int> nuevoScan(ScanModel nuevoScan) async {
     final db = await database;
-    final result = db.insert('Scans', nuevoScan.toMap());
+    final result = await db.insert('Scans', nuevoScan.toMap());
+
+    // Regresa el Id del ultimo elemento registrado
+    return result;
+  }
+
+  Future<ScanModel?> getScanById(int id) async {
+    final db = await database;
+    final result = await db.query('Scans', where: 'id = ?', whereArgs: [id]);
+
+    // Regresa el Id del ultimo elemento registrado
+    return result.isNotEmpty ? ScanModel.fromMap(result.first) : null;
+  }
+
+  Future<List<ScanModel>> getAllScan(int id) async {
+    final db = await database;
+    final result = await db.query('Scans');
+
+    // Regresa el Id del ultimo elemento registrado
+    final List<ScanModel> listResult =
+        result.map((s) => ScanModel.fromMap(s)).toList();
+
+    return result.isNotEmpty ? listResult : [];
+  }
+
+  Future<List<ScanModel>> getAllScanByType(String tipo) async {
+    final db = await database;
+    final result = await db.rawQuery('''
+      SELECT * FROM Scans WHERE tipo = '$tipo'
+    ''');
+
+    // Regresa el Id del ultimo elemento registrado
+    final List<ScanModel> listResult =
+        result.map((s) => ScanModel.fromMap(s)).toList();
+
+    return result.isNotEmpty ? listResult : [];
+  }
+
+  Future<int> updateScan(ScanModel nuevoScan) async {
+    final db = await database;
+    final result = db.update('Scans', nuevoScan.toMap(),
+        where: 'id = ? ', whereArgs: [nuevoScan.id]);
+
+    return result;
+  }
+
+  Future<int> deteleScan(int id) async {
+    final db = await database;
+    final result = await db.delete('Scans', where: 'id = ?', whereArgs: [id]);
+
+    return result;
+  }
+
+  Future<int> deteleAllScan() async {
+    final db = await database;
+    final result = await db.rawDelete('''
+      DELETE FROM Scans
+    ''');
+
     return result;
   }
 }

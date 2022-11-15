@@ -1,16 +1,16 @@
 import 'dart:convert';
 
 class ScanModel {
-  int id;
-  String tipo;
+  int? id;
+  String? tipo;
   String valor;
 
   ScanModel({
-    required this.id,
-    required this.tipo,
+    this.id,
+    this.tipo,
     required this.valor,
   }) {
-    if (tipo.contains('http')) {
+    if (valor.contains('http')) {
       tipo = 'http';
     } else {
       tipo = 'geo';

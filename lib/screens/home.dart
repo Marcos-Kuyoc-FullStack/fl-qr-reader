@@ -42,8 +42,8 @@ class _HomeBody extends StatelessWidget {
 
     // Cambiar para mostrar la pantalla correspondiente
     final currenIndex = uiProvider.selectedMenuOption;
-    // TODO: Leer la BD
-    DBProvider.db.database;
+
+    DBProvider.db.deteleAllScan().then((value) => print(value));
 
     switch (currenIndex) {
       case 0:
