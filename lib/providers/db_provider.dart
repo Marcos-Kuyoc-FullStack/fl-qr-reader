@@ -77,7 +77,7 @@ class DBProvider {
     return result.isNotEmpty ? ScanModel.fromMap(result.first) : null;
   }
 
-  Future<List<ScanModel>> getAllScan(int id) async {
+  Future<List<ScanModel>> getAllScan() async {
     final db = await database;
     final result = await db.query('Scans');
 

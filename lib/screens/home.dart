@@ -43,8 +43,6 @@ class _HomeBody extends StatelessWidget {
     // Cambiar para mostrar la pantalla correspondiente
     final currenIndex = uiProvider.selectedMenuOption;
 
-    DBProvider.db.deteleAllScan().then((value) => print(value));
-
     switch (currenIndex) {
       case 0:
         return const MapaScreen();
