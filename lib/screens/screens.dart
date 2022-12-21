@@ -1,2 +1,2 @@
 export 'package:qr_reader/screens/home.dart';
-export 'package:qr_reader/screens/mapa.dart';
+export 'package:qr_reader/screens/mapas.dart';
