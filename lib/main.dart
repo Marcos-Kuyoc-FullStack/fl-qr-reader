@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_reader/providers/scan-list-provider.dart';
 import 'package:qr_reader/providers/ui_providers.dart';
+import 'package:qr_reader/screens/mapa.dart';
 
 import 'screens/screens.dart';
 import 'themes/app_theme.dart';
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
         initialRoute: 'home',
         routes: {
           'home': (_) => const HomeScreen(),
-          'mapa': (_) => const MapasScreen(),
+          'mapa': (_) => const MapaScreen(),
         },
         theme: AppTheme.lightTheme,
       ),
