@@ -22,21 +22,46 @@ class _MapaScreenState extends State<MapaScreen> {
     final ScanModel scan =
         ModalRoute.of(context)!.settings.arguments as ScanModel;
 
-    CameraPosition puntoInicial = CameraPosition(
-      target: scan.getLatLng(),
-      zoom: 17,
-    );
+    CameraPosition puntoInicial =
+        CameraPosition(target: scan.getLatLng(), zoom: 17, tilt: 50);
+
+    // Marcadores
+    // ignore: prefer_collection_literals
+    Set<Marker> markers = Set<Marker>();
+    markers.add(Marker(
+      markerId: const MarkerId('gel-location'),
+      position: scan.getLatLng(),
+    ));
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Mapa'),
+        actions: [
+          IconButton(
+              onPressed: () async {
+                final GoogleMapController controller = await _controller.future;
+                controller.animateCamera(
+                    CameraUpdate.newCameraPosition(CameraPosition(
+                  target: scan.getLatLng(),
+                  zoom: 17,
+                  tilt: 50,
+                )));
+              },
+              icon: const Icon(Icons.location_searching_sharp))
+        ],
       ),
       body: GoogleMap(
+        myLocationButtonEnabled: false,
         mapType: MapType.normal,
+        markers: markers,
         initialCameraPosition: puntoInicial,
         onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.layers),
+        onPressed: () {},
       ),
     );
   }
