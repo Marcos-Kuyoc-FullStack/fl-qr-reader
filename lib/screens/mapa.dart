@@ -17,6 +17,8 @@ class _MapaScreenState extends State<MapaScreen> {
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
 
+  late MapType mapType = MapType.normal;
+
   @override
   Widget build(BuildContext context) {
     final ScanModel scan =
@@ -40,19 +42,23 @@ class _MapaScreenState extends State<MapaScreen> {
           IconButton(
               onPressed: () async {
                 final GoogleMapController controller = await _controller.future;
+
                 controller.animateCamera(
-                    CameraUpdate.newCameraPosition(CameraPosition(
-                  target: scan.getLatLng(),
-                  zoom: 17,
-                  tilt: 50,
-                )));
+                  CameraUpdate.newCameraPosition(
+                    CameraPosition(
+                      target: scan.getLatLng(),
+                      zoom: 17,
+                      tilt: 50,
+                    ),
+                  ),
+                );
               },
               icon: const Icon(Icons.location_searching_sharp))
         ],
       ),
       body: GoogleMap(
         myLocationButtonEnabled: false,
-        mapType: MapType.normal,
+        mapType: mapType,
         markers: markers,
         initialCameraPosition: puntoInicial,
         onMapCreated: (GoogleMapController controller) {
@@ -61,7 +67,15 @@ class _MapaScreenState extends State<MapaScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.layers),
-        onPressed: () {},
+        onPressed: () {
+          setState(() {
+            if (mapType == MapType.normal) {
+              mapType = MapType.satellite;
+            } else {
+              mapType = MapType.normal;
+            }
+          });
+        },
       ),
     );
   }
